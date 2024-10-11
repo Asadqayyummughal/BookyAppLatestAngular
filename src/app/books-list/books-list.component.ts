@@ -157,5 +157,6 @@ updateBook(book:any){
 }
 sendMessage(){
   this.socket_servise.sendMessage(this.message)
+  
 }
 }
