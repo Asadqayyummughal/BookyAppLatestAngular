@@ -1,0 +1,124 @@
+<label for="">Enter Your Message</label>
+<input type="text" [(ngModel)]="message">
+<button (click)="sendMessage()">Submit Message</button>
+<div>
+
+
+@if (messages.length>0) {
+    @for (msg of messages; track $index) {
+        <p>{{msg}}</p>
+    }
+
+}
+</div>
+
+
+<!-- <div class="bg-orange-600">
+  <div class="
+            h-screen grid grid-cols-[200px_200px_200px]
+             grid-rows-[150px_200px_150px] content-center justify-center
+             gap-x-5 gap-y-5  border-5
+               
+                 border-white "> 
+    <div class="bg-orange-500 text-white px-6 py-2">
+      Item 1
+    </div>
+    <div class="bg-orange-500 text-white px-6 py-2">
+      Item 2
+    </div>
+    <div class="bg-orange-500 text-white px-6 py-2">
+      Item 3
+    </div>
+    <div class="bg-orange-500 text-white px-6 py-2">
+      Item 4
+    </div>
+    <div class="bg-orange-500 text-white px-6 py-2 justify-self-center self-center">
+      Item 5
+    </div>
+    <div class="bg-orange-500 text-white px-6 py-2 justify-self-center self-center">
+      Item 6
+    </div>
+    <div class="bg-orange-500 text-white px-6 py-2">
+      Item 7
+    </div>
+    <div class="bg-orange-500 text-white px-6 py-2">
+      Item 8
+    </div>
+    <div class="bg-orange-500 text-white px-6 py-2">
+      Item 9
+    </div>
+  </div>
+</div> -->
+<!-- <div class="h-screen bg-cyan-500 flex   justify-around flex-wrap gap-2">
+  <div class="bg-cyan-400 text-white px-6 py-4 text-4xl order-1">1</div>
+  <div class="bg-cyan-400 text-white px-6 py-4 text-4xl grow">2</div>
+  <div class="bg-cyan-400 text-white px-6 py-4 text-4xl -order-1">3</div>
+  <div class="bg-cyan-400 text-white px-6 py-4 text-4xl shrink-0 self-center">4</div>
+  <div class="bg-cyan-400 text-white px-6 py-4 text-4xl">5</div>
+
+</div> -->
+
+<div class="continer">
+    <h1 class="text-center font-bold py-2 text-gray-500" >Books List</h1>
+    <table class="min-w-full bg-white shadow-md rounded-lg ">
+      <thead class="bg-gray-800 text-white">
+        <tr>
+          <th class="py-2 px-4">Book Id</th>
+          <th class="py-2 px-4">Book Author</th>
+          <th class="py-2 px-4">Book Name</th>
+          <th class="py-2 px-4">Book Image</th>
+          <th class="py-2 px-4">Book Price</th>
+          <th class="py-2 px-4">Book Added At</th>
+          <th class="py-2 px-4">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (book of  books_service.books; track $index) {
+          <tr class="hover:bg-gray-100 my-2 ">
+            <td class="py-2 px-4 text-center">{{ $index + 1 }}</td>
+            <td class="py-2 px-4 text-center">{{book.author}}</td>
+            <td class="py-2 px-4 text-center">{{ book.name }}</td> 
+            <td class="py-2 px-4">
+              @if (book.file_path) {
+                <img [src]="domain_url+book.file_path" alt="Book Image" class="h-16 w-16 object-cover">
+              } @else {
+                <div class="w-16 h-16">
+                    <img src="../../../public/defaultBook.jpg" 
+                    class="w-full border-red-50 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl rounded-lg shadow-lg"
+                    alt="default book image">
+                </div>
+              } 
+            </td>
+    
+            <td class="py-2 px-4 text-center">Rs: {{ book.price  }}</td> 
+    
+            <td class="py-2 px-4 text-center">{{ book.date_added ? (book.date_added | date:'medium') : 'N/A' }}</td> 
+    
+            <td class="py-2 px-4 text-center flex gap-3 justify-center">
+           
+              <button
+              (click)="_addNewBook()"
+              class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700">Add Book</button>
+              <button 
+              (click)="deleteBook(book._id)"
+              class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700">Delete</button>
+              <button 
+              (click)="updateBook(book)"
+              class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700">Update</button>
+            </td>
+          </tr>
+        }
+        @empty {
+           <div class="flex align-middle justify-center" >
+            <p class="text-black">No Record Found</p>
+           </div>        
+        }
+      </tbody>
+    </table>
+
+</div>
+
+<app-book-modal>
+
+</app-book-modal>
+

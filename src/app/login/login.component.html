@@ -1,0 +1,88 @@
+<div class="flex justify-center items-center py-1 page-rapper">
+    <div >
+        <h1
+         class="w-96 px-4 py-2 bg-blue-500 text-white font-semibold text-lg text text-center rounded-lg ">Booky login</h1>
+         <form 
+         #login_form="ngForm"
+         (ngSubmit)="submitForm(login_form.value)"
+         action="" 
+         class="flex flex-col gap-3 border-blue-500 pt-2 ">
+            <div>
+                <input 
+                type="email" placeholder="your@gmail.com" class=" rounded-lg w-96 border-b-2 py-1 px-1"
+                name="email"
+                [(ngModel)]="model.email"
+                #email="ngModel"
+                required
+                email
+                
+                >
+                @if(email.touched&&email.invalid) {
+                    @if (email.errors?.['required']) {
+                        <p
+                        class="text-red-400 font-mono"
+                        ><small>Email is required.</small>
+                    </p>
+                        
+
+                    }
+                    @else if (email.errors?.['email']) {
+                        <p>
+                            <small class="text-red-400 font-mono">
+                                Invalid Email Address.
+    
+                            </small>
+                        </p>
+                    }
+                   
+                }
+                
+               
+            </div>
+            <div >
+                <input 
+                type="text" placeholder="password" 
+                class="w-96 border-b-2 py-1 px-1 rounded-lg"
+                name="password"
+                #password="ngModel"
+                [(ngModel)]="model.password"
+                minlength="8"
+                required
+                >
+                @if (password.dirty&&password.hasError('minlength')) {
+                    <p class="text-red-400 font-mono">
+                        <small>password must be at least 8 characters long.</small></p>
+                }
+                @else if (password.touched&&password.errors?.['required']) {
+                    <p class="text-red-400 font-mono">
+                        <small>
+                            This field is Mandatory.
+                        </small></p>
+                }
+            </div>
+            <div class="flex justify-center">
+                <button 
+                type="submit"
+                [disabled]="!login_form.valid"
+                class="w-80 px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                Login
+                </button>
+            </div>
+
+
+            <div class="flex justify-end">
+                <a 
+                 class="text-white underline cursor-pointer"
+                 (click)="router.navigateByUrl('signup')"
+                >
+                Register Here
+            </a>
+    
+        
+            </div>
+     
+
+
+         </form>
+    </div>
+</div>

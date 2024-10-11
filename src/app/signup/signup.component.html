@@ -1,0 +1,120 @@
+
+<div class="page-rapper flex justify-center items-center  py-2">
+    <div>
+        <h1 class="w-96 px-4 py-2 bg-blue-500 text-white font-semibold text-lg text text-center rounded-lg">Booky-Register</h1>
+        <p class="text-center py-2 text-white">Create Your Account</p>
+        <form 
+        [formGroup]="signup_form"
+        action=""
+        class="flex flex-col gap-5"
+        (submit)="signupUser()"
+        >
+        <div>
+            <input 
+            type="text" 
+            placeholder="enter your name "
+            formControlName="user_name"
+            class="w-96 border-b-2 py-1 px-1 rounded-lg"
+              >
+              @if(signup_form.get('user_name')?.touched &&signup_form.get('user_name')?.invalid) {    
+                @if(signup_form.get('user_name')?.hasError('required')) {
+                  <p class="text-red-400 font-mono"><small>username is required</small> </p>
+                }
+                @else {
+                  <p class="text-red-400 font-mono"><small>username must be be 8 characters log.</small></p>
+                 
+                }
+              }
+        </div>
+         <div>
+            <input
+            class="w-96 border-b-2 py-1 px-1 rounded-lg"
+            formControlName="email"
+            type="email" 
+            placeholder="yours@gmail.com" 
+            [autocomplete]="false"
+             > 
+               @if(signup_form.get('email')?.touched&&signup_form.get('email')?.invalid){
+                @if (signup_form.get('email')?.dirty&&signup_form.get('email')?.hasError('email')) {
+                  <p class="text-red-400 font-mono"><small>please provide the exact email pattern</small></p>
+                }
+              @else {
+                <p class="text-red-400 font-mono"><small>This field is mandatory</small></p>
+              }
+  
+            }
+        
+         </div>
+         <div>
+            <input 
+            class="w-96 border-b-2 py-1 px-1 rounded-lg"
+            [type]="hidePassword?'password':'text'"
+            placeholder="password here"
+            formControlName="password"
+            >
+            @if(signup_form.get('password')?.touched &&signup_form.get('password')?.invalid) {    
+              @if(signup_form.get('user_name')?.hasError('required')) {
+                <p class="text-red-400 font-mono"><small>password is required</small> </p>
+              }
+              @else {
+                <p class="text-red-400 font-mono"><small>password must be be 8 characters log.</small></p>
+               
+              }
+            }
+            <button 
+            type="button"
+            class="ps-1 text-white "
+            (click)="togglePassword()">
+             @if (hidePassword) {  
+               <fa-icon [icon]="faEye"></fa-icon>
+           
+             }
+             @else {
+               <fa-icon [icon]="faEyeSlash"></fa-icon>
+             }
+           </button>
+       
+         </div>
+          <div>
+            <input
+            class="w-96 border-b-2 py-1 px-1 rounded-lg"
+            [type]="hidePassword?'password':'text'"
+            placeholder="confirm your password"
+            formControlName="confirm_password"
+            >
+            @if(signup_form.get('confirm_password')?.touched&&signup_form.hasError('mismatch') ){
+              @if(signup_form.get('confirm_password')?.hasError('required')){
+                <p class="text-red-400 font-mono"><small>this field is mandatory </small></p>
+              }
+              @else {
+                <p class="text-red-400 font-mono"><small>Password Don't Match</small></p>
+
+              }
+            }
+            <button 
+            type="button"
+            class="ps-1 text-white"
+            (click)="togglePassword()">
+             @if (hidePassword) {  
+               <fa-icon [icon]="faEye"></fa-icon>
+           
+             }
+             @else {
+               <fa-icon [icon]="faEyeSlash"></fa-icon>
+             }
+           </button>
+          </div>
+          <div
+          class="text-center"
+          >
+            <button
+            [disabled]="signup_form.invalid"
+            class="w-80 px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            type="submit"
+
+          >Sumbit</button>
+          </div>
+        </form>
+    </div>
+
+</div>
