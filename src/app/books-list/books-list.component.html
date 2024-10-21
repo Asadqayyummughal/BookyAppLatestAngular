@@ -1,4 +1,94 @@
-<label for="">Enter Your Message</label>
+<header class=" flex justify-between px-5 pt-1 bg-blue-400 text-white">
+   <div>
+    <h6 class="font-serif font-bold">The Booky</h6>
+   </div>
+   <div>
+    <button 
+    
+    (click)="_logOutUser()">logout</button>
+          
+   </div>
+
+</header>
+
+<div>  
+  <h1 class="text-center font-bold py-2 text-gray-500  bg-gray-800" >Books List</h1>
+    <table class="min-w-full bg-white shadow-md rounded-lg ">
+      <thead class="bg-gray-800 text-white">
+        <tr>
+          <th class="py-2 px-4">Book #</th>
+          <th class="py-2 px-4">Book Author</th>
+          <th class="py-2 px-4">Book Name</th>
+          <th class="py-2 px-4">Book Image</th>
+          <th class="py-2 px-4">Book Price</th>
+          <th class="py-2 px-4">Company</th>
+          <th class="py-2 px-4">Book Added At</th>
+          <th class="py-2 px-4 flex flex-col">Actions
+            <button
+            (click)="_addNewBook()"
+            class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700">
+            Add Book
+          </button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+    
+        @for (book of  books_service.books; track $index) {
+          <tr class="hover:bg-gray-500 hover:text-white my-2 flex-1 justify-center items-center ">
+            <td class="py-2 px-4 text-center">{{$index + 1 }}</td>
+            <td class="py-2 px-4 text-center">{{book.author}}</td>
+            <td class="py-2 px-4 text-center">{{ book.name }}</td> 
+            <td class="py-2 px-4 flex justify-center items-center ">
+              @if (book.file_path) {
+                <img 
+                [src]="domain_url+book.file_path" alt="Book Image" 
+                class="h-10 w-10 rounded-full object-cover border-r-slate-700 ring-2">
+              } @else {
+                <div >
+                    <img src="../../../public/product-not-found.png" 
+                    class="h-10 w-10 rounded-full object-cover border-r-slate-700 ring-2"
+                    alt="default book image">
+                </div>
+              } 
+            </td>
+            <td class="py-2 px-4 text-center font-bold">Rs: {{ book.price  }}.00/</td> 
+            <td class="py-2 px-4 text-center font-bold"> {{ book.company }}</td> 
+            <td class="py-2 px-4 text-center">{{book.date_added ? (book.date_added | date:'medium') : 'N/A' }}</td> 
+            <td class="py-2 px-4 text-center  ">
+              <button 
+              (click)="deleteBook(book._id,'1000ms','1000ms' )"
+              class="bg-red-500 text-white px-2 mx-2 py-1  rounded hover:bg-red-700">Delete</button>
+              <button 
+              (click)="updateBook(book)"
+              class="bg-blue-500 text-white px-2 py-1 my-2 lg:my-0 rounded hover:bg-blue-700">Update</button>
+            </td>
+          </tr>
+        }
+        @empty {
+           <div class="flex align-middle justify-center" >
+            <p class="text-black">No Record Found</p>
+           </div>        
+        }
+      </tbody>
+    </table>
+
+</div>
+
+
+
+<!-- <app-book-modal>
+
+</app-book-modal> -->
+
+<!-- **********delete Book Modal************ -->
+
+
+
+
+<!-- **************Practise Material*************** -->
+
+<!-- <label for="">Enter Your Message</label>
 <input type="text" [(ngModel)]="message">
 <button (click)="sendMessage()">Submit Message</button>
 <div>
@@ -10,7 +100,7 @@
     }
 
 }
-</div>
+</div> -->
 
 
 <!-- <div class="bg-orange-600">
@@ -57,68 +147,3 @@
   <div class="bg-cyan-400 text-white px-6 py-4 text-4xl">5</div>
 
 </div> -->
-
-<div class="continer">
-    <h1 class="text-center font-bold py-2 text-gray-500" >Books List</h1>
-    <table class="min-w-full bg-white shadow-md rounded-lg ">
-      <thead class="bg-gray-800 text-white">
-        <tr>
-          <th class="py-2 px-4">Book Id</th>
-          <th class="py-2 px-4">Book Author</th>
-          <th class="py-2 px-4">Book Name</th>
-          <th class="py-2 px-4">Book Image</th>
-          <th class="py-2 px-4">Book Price</th>
-          <th class="py-2 px-4">Book Added At</th>
-          <th class="py-2 px-4">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (book of  books_service.books; track $index) {
-          <tr class="hover:bg-gray-100 my-2 ">
-            <td class="py-2 px-4 text-center">{{ $index + 1 }}</td>
-            <td class="py-2 px-4 text-center">{{book.author}}</td>
-            <td class="py-2 px-4 text-center">{{ book.name }}</td> 
-            <td class="py-2 px-4">
-              @if (book.file_path) {
-                <img [src]="domain_url+book.file_path" alt="Book Image" class="h-16 w-16 object-cover">
-              } @else {
-                <div class="w-16 h-16">
-                    <img src="../../../public/defaultBook.jpg" 
-                    class="w-full border-red-50 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl rounded-lg shadow-lg"
-                    alt="default book image">
-                </div>
-              } 
-            </td>
-    
-            <td class="py-2 px-4 text-center">Rs: {{ book.price  }}</td> 
-    
-            <td class="py-2 px-4 text-center">{{ book.date_added ? (book.date_added | date:'medium') : 'N/A' }}</td> 
-    
-            <td class="py-2 px-4 text-center flex gap-3 justify-center">
-           
-              <button
-              (click)="_addNewBook()"
-              class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-700">Add Book</button>
-              <button 
-              (click)="deleteBook(book._id)"
-              class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700">Delete</button>
-              <button 
-              (click)="updateBook(book)"
-              class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700">Update</button>
-            </td>
-          </tr>
-        }
-        @empty {
-           <div class="flex align-middle justify-center" >
-            <p class="text-black">No Record Found</p>
-           </div>        
-        }
-      </tbody>
-    </table>
-
-</div>
-
-<app-book-modal>
-
-</app-book-modal>
-

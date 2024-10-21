@@ -1,0 +1,17 @@
+<div class="p-5 bg-slate-600 text-white">
+  <h2 mat-dialog-title>Delete file</h2>
+
+  <p class="text-white">
+    
+    Would you like to delete?
+  </p>
+
+  <mat-dialog-actions>
+    <button 
+    class="bg-gray-500 text-white px-2 mx-2 py-1 rounded hover:bg-gray-700 "
+    mat-button mat-dialog-close >No</button>
+    <button 
+    class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700"
+    mat-button mat-dialog-close cdkFocusInitial (click)="modalDel()">Ok</button>
+  </mat-dialog-actions>
+  </div>

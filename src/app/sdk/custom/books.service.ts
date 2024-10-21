@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BookyConfig } from '../booky.configs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,11 +13,21 @@ export class BooksService {
   public books_path=BookyConfig.getPath()+"/books/";
   public books:Array<any>=[];
   public updated_book=new Subject();
-  public is_upadated=new BehaviorSubject(false)
+  public is_upadated=new BehaviorSubject(false);
+  public auth_token:any
 
-  constructor(private http:HttpClient) { 
+
+  constructor(
+    private http:HttpClient,
+    private toaster:ToastrService,
+  ) { 
+   
+    let jwt:any=sessionStorage.getItem('jwtToken')?JSON.parse(sessionStorage.getItem('jwtToken') as any) :undefined;
+    this.auth_token=jwt.token;
+    console.log('check out the token===>',jwt.token);
     this.fetchBooks();
-  }
+     
+  }  
 
   fetchBooks()
   {
@@ -29,9 +41,14 @@ export class BooksService {
         params=params.set(key,queryParams[key]);
       }
     );
-     this.http.get(`${this.books_path}/fetchBooks`,{params}).subscribe(
+     this.http.get(`${this.books_path}/fetchBooks`,
+      {
+      params:params,
+      headers: new HttpHeaders().set('Authorization',this.auth_token)      
+    }).subscribe(
       (resp:any)=>{
         // console.log('books',resp);
+      
         this.books=resp.books;
       },
       (error)=>{
@@ -39,7 +56,6 @@ export class BooksService {
       },
       
     )
-     
     
   }
   AddBook(book:unknown):Observable<any>{

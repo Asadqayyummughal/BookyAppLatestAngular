@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   public token:undefined|any;
   constructor(private router:Router) { 
-  this.token=JSON.stringify(sessionStorage.getItem('jwtToken'))
+ // this.token=JSON.stringify(sessionStorage.getItem('jwtToken'))
   }
 
 }

@@ -30,8 +30,7 @@ export class LoginComponent {
   model = {email: '',password:"" };
   submitForm(loginData:FormData|any){    
     this.user_service.loginUser(loginData).subscribe(
-      (resp:any)=>{
-        console.log("congrats user login successfull",resp);  
+      (resp:any)=>{ 
         this.toast.success(resp.message);
         sessionStorage.setItem('jwtToken',JSON.stringify(resp));
         this.router.navigateByUrl('bookList')
